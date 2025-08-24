@@ -2,15 +2,22 @@ import React, { useEffect, useMemo, useRef } from "react";
 
 type Particle = { x: number; y: number; vx: number; vy: number; r: number };
 
-export const ParticleBackground: React.FC<{ className?: string; density?: number }> = ({ className = "", density = 0.12 }) => {
+export const ParticleBackground: React.FC<{ className?: string; density?: number; darkMode?: boolean }> = ({
+  className = "",
+  density = 0.12,
+  darkMode = false,
+}) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const frameRef = useRef<number | null>(null);
   const particlesRef = useRef<Particle[]>([]);
   const mouseRef = useRef<{ x: number; y: number } | null>(null);
 
   const palette = useMemo(
-    () => ["#bbf7d0", "#86efac", "#4ade80", "#22c55e", "#16a34a"],
-    []
+    () =>
+      darkMode
+        ? ["#bbf7d0", "#4ade80", "#22c55e", "#16a34a", "#052e16"]
+        : ["#bbf7d0", "#86efac", "#4ade80", "#22c55e", "#16a34a"],
+    [darkMode]
   );
 
   useEffect(() => {
@@ -35,7 +42,13 @@ export const ParticleBackground: React.FC<{ className?: string; density?: number
     function spawn(w: number, h: number): Particle {
       const speed = 0.15 + Math.random() * 0.35;
       const angle = Math.random() * Math.PI * 2;
-      return { x: Math.random() * w, y: Math.random() * h, vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed, r: 1 + Math.random() * 2.2 };
+      return {
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        r: 1 + Math.random() * 2.2,
+      };
     }
 
     function onMouseMove(e: MouseEvent) {
@@ -55,7 +68,7 @@ export const ParticleBackground: React.FC<{ className?: string; density?: number
       if (!ctx) return;
       const { width: w, height: h } = canvas;
 
-      ctx.fillStyle = "#ffffff"; // red for testing
+      ctx.fillStyle = darkMode ? "#111827" : "#ffffff";
       ctx.fillRect(0, 0, w, h);
 
       const parts = particlesRef.current;
@@ -134,7 +147,7 @@ export const ParticleBackground: React.FC<{ className?: string; density?: number
       canvas.removeEventListener("mousemove", onMouseMove);
       canvas.removeEventListener("mouseleave", onMouseLeave);
     };
-  }, [density, palette]);
+  }, [density, palette, darkMode]);
 
   return (
     <div className={`absolute inset-0 z-0 ${className}`}>
