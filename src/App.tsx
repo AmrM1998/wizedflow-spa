@@ -16,7 +16,7 @@ const description = `
   Welcome to the <strong>future of intelligent automation</strong>.
 `;
 
-const Home: React.FC<{ darkMode: boolean }> = ({ darkMode }) => {
+const Home: React.FC<{ darkMode: boolean; onContactClick: () => void }> = ({ darkMode, onContactClick }) => {
   return (
     <Container className={`pt-10 pb-20 ${darkMode ? "bg-gray-900" : ""}`}>
       <Card className={`relative overflow-hidden ${darkMode ? "bg-gray-800 text-white" : ""}`}>
@@ -35,8 +35,8 @@ const Home: React.FC<{ darkMode: boolean }> = ({ darkMode }) => {
           <Typewriter text={description} speed={24} />
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
-          <Button iconLeft={<MessageSquare className="h-4 w-4" />}>Get Started</Button>
-          <Button variant="ghost">Learn More</Button>
+          <Button iconLeft={<MessageSquare className="h-4 w-4" />} onClick={onContactClick}>Get Started</Button>
+          <Button variant="ghost" onClick={onContactClick}>Learn More</Button>
         </div>
       </Card>
     </Container>
@@ -140,7 +140,7 @@ const App: React.FC = () => {
         >
           {active === "home" ? 
           <>
-            <Home darkMode={darkMode} />
+            <Home darkMode={darkMode} onContactClick={() => setActive("contact")} />
             {/* <WhatYouGet darkMode={darkMode} /> */}
             
           </>
