@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .faq-details {
+    display: grid;
+    grid-template-rows: auto 0fr;
+  }
+  .faq-details[open] {
+    grid-template-rows: auto 1fr;
+  }
+  .faq-details > :not(summary) {
+    overflow: hidden;
+  }
+}
+
 /* Custom scrollbar for style */
 ::-webkit-scrollbar {
   width: 8px;

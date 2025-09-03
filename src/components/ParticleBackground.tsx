@@ -150,7 +150,7 @@ export const ParticleBackground: React.FC<{ className?: string; density?: number
   }, [density, palette, darkMode]);
 
   return (
-    <div className={`absolute inset-0 z-0 ${className}`}>
+    <div className={`fixed inset-0 z-0 ${className}`}>
       <canvas ref={canvasRef} className="h-full w-full" />
     </div>
   );
