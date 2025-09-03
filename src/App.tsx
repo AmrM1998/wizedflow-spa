@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { MessageSquare, Sparkles, Bot, Workflow, Cpu, Facebook, Linkedin } from "lucide-react";
+import { MessageSquare, Sparkles, Bot, Workflow, Cpu, Facebook, Linkedin, Quote } from "lucide-react";
 import { Container, Card, Button, Input } from "./components/UI";
 import { Nav } from "./components/Nav";
 import { ParticleBackground } from "./components/ParticleBackground";
@@ -36,6 +36,49 @@ const products = [
     description: "We partner with large organizations to design and implement bespoke AI automation solutions for unique, mission-critical challenges.",
   },
 ];
+
+const testimonials = [
+  {
+    quote: "Wizedflow transformed our operations. The agentic workflows are incredibly powerful and have saved us countless hours of manual work.",
+    name: "Alex Johnson",
+    title: "COO, Innovatech",
+  },
+  {
+    quote: "The no-code interface is a game-changer. Our team was able to design and deploy complex automations in days, not months.",
+    name: "Samantha Lee",
+    title: "Head of Operations, DataDriven Co.",
+  },
+  {
+    quote: "Exceptional platform with even better support. Wizedflow is at the core of our scaling strategy. Highly recommended!",
+    name: "Michael Chen",
+    title: "CTO, ScaleUp Solutions",
+  },
+];
+
+const Testimonials: React.FC<{ darkMode?: boolean }> = ({ darkMode }) => (
+  <Card className={`mt-12 ${darkMode ? "bg-gray-800 text-white" : ""}`}>
+    <h2 className={`text-3xl font-bold text-center mb-10 ${darkMode ? "text-green-200" : "text-green-900"}`}>
+      Trusted by Innovators
+    </h2>
+    <div className="grid md:grid-cols-3 gap-8">
+      {testimonials.map((testimonial, index) => (
+        <Card
+          key={index}
+          className={`flex flex-col justify-between ${darkMode ? "bg-gray-700/50" : "bg-green-50/50"}`}
+        >
+          <div className="flex-grow">
+            <Quote className={`h-6 w-6 mb-2 ${darkMode ? "text-green-400" : "text-green-500"}`} />
+            <p className={`italic ${darkMode ? "text-green-100/90" : "text-green-950/90"}`}>{testimonial.quote}</p>
+          </div>
+          <div className="mt-4 pt-4 border-t text-right border-green-200/20">
+            <p className={`font-bold ${darkMode ? "text-green-300" : "text-green-800"}`}>{testimonial.name}</p>
+            <p className={`text-sm ${darkMode ? "text-green-100/70" : "text-green-950/70"}`}>{testimonial.title}</p>
+          </div>
+        </Card>
+      ))}
+    </div>
+  </Card>
+);
 
 const Home: React.FC<{ darkMode: boolean; onContactClick: () => void }> = ({ darkMode, onContactClick }) => {
   return (
@@ -95,8 +138,11 @@ const Home: React.FC<{ darkMode: boolean; onContactClick: () => void }> = ({ dar
           })}
         </div>
       </Card>
+      
+      <Testimonials darkMode={darkMode} />
 
       <FAQ darkMode={darkMode} />
+
 
       <Card className={`mt-8 relative overflow-hidden ${darkMode ? "bg-gray-800 text-white" : ""}`}>
         <div className="absolute -top-8 -right-8 opacity-20">
